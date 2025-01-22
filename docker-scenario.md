@@ -221,3 +221,72 @@ To handle service dependencies, I would take the following steps:
        MYSQL_ROOT_PASSWORD: example
      healthcheck:
       
+
+===
+===
+If you're using **`firewalld`** instead of `iptables` for managing firewall rules, you would use the `firewall-cmd` command to allow incoming traffic on port `8080`. Below are the steps for adding and managing firewall rules using `firewall-cmd`.
+
+### Allowing TCP Traffic on Port 8080 using `firewall-cmd`
+
+1. **Allow Incoming Traffic on Port 8080**:
+   To allow incoming TCP traffic on port 8080, you would use the following command:
+
+   ```bash
+   sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
+   ```
+
+   - `--zone=public`: Specifies the zone to which the rule should apply. In most cases, this is the default zone, but it can vary based on your network configuration.
+   - `--add-port=8080/tcp`: Specifies the port (8080) and the protocol (`tcp`) to allow.
+   - `--permanent`: Ensures that the rule is saved and persists across reboots.
+
+2. **Reload the Firewall for Changes to Take Effect**:
+   After adding the rule, you need to reload the firewall to apply the changes:
+
+   ```bash
+   sudo firewall-cmd --reload
+   ```
+
+3. **Verify the Firewall Rule**:
+   You can check if the rule has been successfully added by listing the open ports:
+
+   ```bash
+   sudo firewall-cmd --zone=public --list-ports
+   ```
+
+   This will display the ports currently open in the `public` zone, and you should see `8080/tcp` listed.
+
+---
+
+### Removing the Rule (if needed)
+
+If you later decide to remove the rule for port `8080`, you can do so with the following command:
+
+```bash
+sudo firewall-cmd --zone=public --remove-port=8080/tcp --permanent
+```
+
+Then, reload the firewall again to apply the changes:
+
+```bash
+sudo firewall-cmd --reload
+```
+
+---
+
+### Additional Notes:
+
+- **Zones**: In `firewalld`, you can define different zones for different network interfaces (e.g., `public`, `dmz`, `internal`). Make sure you're applying the rule to the correct zone. The `public` zone is commonly used for external interfaces.
+  
+  To see all available zones:
+  ```bash
+  sudo firewall-cmd --get-zones
+  ```
+
+- **Checking Active Zones**: To see which zones are active and which interfaces are assigned to them:
+  ```bash
+  sudo firewall-cmd --get-active-zones
+  ```
+
+- **Testing Access**: After applying this rule, you can test access to port 8080 by attempting to connect to your service on that port (e.g., `http://<host_ip>:8080`).
+
+Let me know if you need further clarification or if there's anything else you'd like to explore!
