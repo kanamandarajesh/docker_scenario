@@ -9,16 +9,21 @@ Answer:
 
 Use the docker stats command to monitor container resource usage:
 
+```
 docker stats <container-id>
+```
 
 To limit resource usage, use the --memory and --cpus flags when starting the container:
 
+```
 docker run --memory="500m" --cpus="1.5" <image-name>
+```
 
 Identify and debug the issue within the application by checking container logs:
 
+```
 docker logs <container-id>
-
+```
 
 
 ---
