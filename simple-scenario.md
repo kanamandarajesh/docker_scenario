@@ -1,9 +1,9 @@
-Here are some scenario-based Docker interview questions and answers to help you prepare for real-world challenges:
+## Here are some scenario-based Docker interview questions and answers to help you prepare for real-world challenges:
 
 
 ---
 
-1. How do you handle a scenario where a container is consuming too much CPU or memory?
+### 1. How do you handle a scenario where a container is consuming too much CPU or memory?
 
 Answer:
 
